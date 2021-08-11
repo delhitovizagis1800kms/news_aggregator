@@ -7,19 +7,28 @@ from dateutil import parser
 import streamlit as st
 
 def date_time_parser(dt):
-    return int((dt.now(dt.tz) - dt).seconds / 60)
+    return int(np.round((dt.now(dt.tz) - dt).total_seconds() / 60, 0))
 
 def elapsed_time_str(mins):
     time_str = ''
     hours = int(mins / 60)
-    days = int(hours / 24)
+    days = np.round(mins / (60 * 24), 1)
+    remaining_mins = int(mins - (hours * 60))
     if (days >= 1):
         time_str = f'{str(days)} days ago'
         if days == 1:
             time_str = 'a day ago'
     elif (days < 1) & (hours < 24) & (mins >= 60):
-        time_str = f'{str(hours)} hours ago'
-        if hours == 1:
+        time_str = f'{str(hours)} hours and {str(remaining_mins)} mins ago'
+        if (hours == 1) & (remaining_mins > 1):
+            time_str = f'an hour and {str(remaining_mins)} mins ago'
+        if (hours == 1) & (remaining_mins == 1):
+            time_str = f'an hour and a min ago'
+        if (hours > 1) & (remaining_mins == 1):
+            time_str = f'{str(hours)} hours and a min ago'
+        if (hours > 1) & (remaining_mins == 0):
+            time_str = f'{str(hours)} hours ago'
+        if ((mins / 60) == 1) & (remaining_mins == 0):
             time_str = 'an hour ago'
     elif (days < 1) & (hours < 24) & (mins == 0):
         time_str = 'Just in'
@@ -40,6 +49,8 @@ def rss_parser(i):
     desc = re.sub("<.*?>", "", desc)
     desc = desc[:500] if len(desc) >= 500 else desc
     date = b1.find("pubDate").get_text()
+    if url.find("businesstoday.in") >=0:
+        date = date.replace("GMT", "+0530")
     date1 = parser.parse(date)
     return pd.DataFrame({"title": title,
                         "url": url,
@@ -84,6 +95,8 @@ for i in rss:
 
 final_df.sort_values(by="elapsed_time", inplace=True)
 final_df['src_time'] = final_df['src'] + ("&nbsp;"*5) + final_df["elapsed_time_str"]
+final_df.drop(columns=['date', 'parsed_date', 'src', 'elapsed_time', 'elapsed_time_str'], inplace=True)
+final_df.drop_duplicates(subset='description', inplace=True)
     
 result_str = '<html><table style="border: none;">'
 for n, i in final_df.iterrows(): #iterating through the search results
@@ -97,5 +110,5 @@ for n, i in final_df.iterrows(): #iterating through the search results
     f'<tr style="border: none;"><td style="border: none; height: 30px;"></td></tr>'
 
 result_str += '</table></html>'
-st.markdown(f'<h1 style="background-color: gainsboro; padding-left: 10px; padding-bottom: 20px;">News Aggregator</h1><h5>* Aggregates news from the top Indian business news websites</h5><br>', unsafe_allow_html=True)
+st.markdown(f'<h1 style="background-color: gainsboro; padding-left: 10px; padding-bottom: 20px;">News Aggregator</h1><h5>* Aggregates news from the RSS feeds of top Indian business news websites</h5><br>', unsafe_allow_html=True)
 st.markdown(result_str, unsafe_allow_html=True)
