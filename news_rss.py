@@ -116,6 +116,7 @@ result_str += '</table></html>'
 hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
+            .css-hi6a2p {padding-top: 0rem;}
             footer {visibility: hidden;}
             </style>
             """
