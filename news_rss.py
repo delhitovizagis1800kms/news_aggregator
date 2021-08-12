@@ -59,6 +59,7 @@ def rss_parser(i):
                         "parsed_date": date1}, index=[0])
 
 rss = ['https://www.economictimes.indiatimes.com/rssfeedstopstories.cms',
+       'http://feeds.feedburner.com/ndtvprofit-latest?format=xml',
       'https://www.thehindubusinessline.com/news/feeder/default.rss',
       'https://www.moneycontrol.com/rss/latestnews.xml',
       'https://www.livemint.com/rss/news',
@@ -68,11 +69,12 @@ rss = ['https://www.economictimes.indiatimes.com/rssfeedstopstories.cms',
       'https://www.zeebiz.com/latest.xml/feed']
 
 def src_parse(rss):
+    if rss.find('ndtvprofit') >= 0:
+        rss = 'ndtv profit'
     rss = rss.replace("https://www.", "")
     rss = rss.split("/")
     return rss[0]
     
-
     
 def news_agg(rss):
     rss_df = pd.DataFrame()
