@@ -41,14 +41,14 @@ def elapsed_time_str(mins):
 
 def rss_parser(i):
     b1 = BeautifulSoup(str(i),"xml")
-    title = b1.find("title").get_text()
-    url = b1.find("link").get_text()
-    desc = b1.find("description").get_text()
+    title = "" if b1.find("title") is None else b1.find("title").get_text()
+    url = "" if b1.find("link") is None else b1.find("link").get_text()
+    desc = "" if b1.find("description") is None else b1.find("description").get_text()
     desc = desc.replace("&lt;", "<")
     desc = desc.replace("&gt;", ">")
     desc = re.sub("<.*?>", "", desc)
-    desc = desc[:500] if len(desc) >= 500 else desc
-    date = b1.find("pubDate").get_text()
+    desc = desc[:300] if len(desc) >= 300 else desc
+    date = "Sat, 12 Aug 2000 13:39:15 +0530" if b1.find("pubDate") is None else b1.find("pubDate").get_text()
     if url.find("businesstoday.in") >=0:
         date = date.replace("GMT", "+0530")
     date1 = parser.parse(date)
@@ -99,6 +99,7 @@ final_df.sort_values(by="elapsed_time", inplace=True)
 final_df['src_time'] = final_df['src'] + ("&nbsp;"*5) + final_df["elapsed_time_str"]
 final_df.drop(columns=['date', 'parsed_date', 'src', 'elapsed_time', 'elapsed_time_str'], inplace=True)
 final_df.drop_duplicates(subset='description', inplace=True)
+final_df = final_df.loc[(final_df["title"] != ""), :].copy()
     
 result_str = '<html><table style="border: none;">'
 for n, i in final_df.iterrows(): #iterating through the search results
@@ -106,9 +107,9 @@ for n, i in final_df.iterrows(): #iterating through the search results
     description = i["description"]
     url_txt = i["title"]
     src_time = i["src_time"]
-    result_str += f'<tr style="border: none; font-weight: bold; font-size: 23px; background-color: whitesmoke;"><a href="{href}" target="_blank">{url_txt}</a></tr>'+\
-    f'<tr style="border: none; background-color: whitesmoke;">{description}</tr>'+\
-    f'<tr style="border: none; color: green; font-size: 14px; font-weight: bold; background-color: whitesmoke;">{src_time}</tr>'+\
+    result_str += f'<tr style="border: none; font-weight: bold; font-size: 18px; background-color: whitesmoke;"><a href="{href}" target="_blank">{url_txt}</a></tr>'+\
+    f'<tr style="border: none; background-color: whitesmoke; font-size: 14px;">{description}</tr>'+\
+    f'<tr style="border: none; color: green; font-size: 12px; font-weight: bold; background-color: whitesmoke;">{src_time}</tr>'+\
     f'<tr style="border: none;"><td style="border: none; height: 30px;"></td></tr>'
 
 result_str += '</table></html>'
