@@ -37,17 +37,26 @@ def elapsed_time_str(mins):
         if mins == 1:
             time_str = 'a minute ago'
     return time_str
-        
+
+def text_clean(desc):
+    desc = desc.replace("&lt;", "<")
+    desc = desc.replace("&gt;", ">")
+    desc = re.sub("<.*?>", "", desc)
+    desc = desc.replace("#39;", "'")
+    desc = desc.replace('&quot;', '"')
+    desc = desc.replace('#32;', ' ')
+    return desc
+    
+    
 
 def rss_parser(i):
     b1 = BeautifulSoup(str(i),"xml")
     title = "" if b1.find("title") is None else b1.find("title").get_text()
+    title = text_clean(title)
     url = "" if b1.find("link") is None else b1.find("link").get_text()
     desc = "" if b1.find("description") is None else b1.find("description").get_text()
-    desc = desc.replace("&lt;", "<")
-    desc = desc.replace("&gt;", ">")
-    desc = re.sub("<.*?>", "", desc)
-    desc = desc[:300] if len(desc) >= 300 else desc
+    desc = text_clean(desc)
+    desc = f'{desc[:300]}...' if len(desc) >= 300 else desc
     date = "Sat, 12 Aug 2000 13:39:15 +0530" if b1.find("pubDate") is None else b1.find("pubDate").get_text()
     if url.find("businesstoday.in") >=0:
         date = date.replace("GMT", "+0530")
@@ -109,7 +118,7 @@ for n, i in final_df.iterrows(): #iterating through the search results
     src_time = i["src_time"]
     result_str += f'<tr style="border: none; font-weight: bold; font-size: 18px; background-color: whitesmoke;"><a href="{href}" target="_blank">{url_txt}</a></tr>'+\
     f'<tr style="border: none; background-color: whitesmoke; font-size: 14px;">{description}</tr>'+\
-    f'<tr style="border: none; color: green; font-size: 12px; font-weight: bold; background-color: whitesmoke;">{src_time}</tr>'+\
+    f'<tr style="border: none; color: green; font-size: 11px; font-weight: bold; background-color: whitesmoke;">{src_time}</tr>'+\
     f'<tr style="border: none;"><td style="border: none; height: 30px;"></td></tr>'
 
 result_str += '</table></html>'
