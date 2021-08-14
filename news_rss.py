@@ -116,9 +116,12 @@ for n, i in final_df.iterrows(): #iterating through the search results
     description = i["description"]
     url_txt = i["title"]
     src_time = i["src_time"]
-    result_str += f'<tr style="border: none; font-weight: bold; font-size: 18px; background-color: whitesmoke;"><a href="{href}" target="_blank">{url_txt}</a></tr>'+\
-    f'<tr style="border: none; background-color: whitesmoke; font-size: 14px;">{description}</tr>'+\
-    f'<tr style="border: none; color: green; font-size: 11px; font-weight: bold; background-color: whitesmoke;">{src_time}</tr>'+\
+    result_str += f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: black;">'+\
+    f'<tr style="border: none; font-weight: bold; font-size: 19px; background-color: whitesmoke;">{url_txt}</tr></a>'+\
+    f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: dimgray;">'+\
+    f'<tr style="border: none; font-size: 14px;">{description}</tr></a>'+\
+    f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: black;">'+\
+    f'<tr style="border: none; color: blue; font-size: 11px;">{src_time}</tr></a>'+\
     f'<tr style="border: none;"><td style="border: none; height: 30px;"></td></tr>'
 
 result_str += '</table></html>'
@@ -130,6 +133,8 @@ hide_streamlit_style = """
             footer {visibility: hidden;}
             </style>
             """
+
+
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 #st.markdown(f'<h1 style="background-color: gainsboro; padding-left: 10px; padding-bottom: 20px;">News Aggregator</h1><h5>* Aggregates news from the RSS feeds of top Indian business news websites</h5><br>', unsafe_allow_html=True)
