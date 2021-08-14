@@ -116,10 +116,10 @@ for n, i in final_df.iterrows(): #iterating through the search results
     description = i["description"]
     url_txt = i["title"]
     src_time = i["src_time"]
-    result_str += f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: black;">'+\
-    f'<tr style="border: none; font-weight: bold; font-size: 18px; background-color: whitesmoke;">{url_txt}</tr></a>'+\
-    f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: dimgray;">'+\
-    f'<tr style="border: none; font-size: 14px;">{description}</tr></a>'+\
+    result_str += f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: black; line-height: 1.2;">'+\
+    f'<tr style="border-top: 0px; border-bottom: 5px solid transparent; font-weight: bold; font-size: 18px; background-color: whitesmoke;">{url_txt}</tr></a>'+\
+    f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: dimgray; line-height: 1.25;">'+\
+    f'<tr style="border-top: 0px; border-bottom: 5px solid transparent; font-size: 14px; padding-bottom:5px;">{description}</tr></a>'+\
     f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: black;">'+\
     f'<tr style="border: none; color: blue; font-size: 11px;">{src_time}</tr></a>'+\
     f'<tr style="border: none;"><td style="border: none; height: 30px;"></td></tr>'
