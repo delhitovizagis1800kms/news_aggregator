@@ -117,7 +117,7 @@ for n, i in final_df.iterrows(): #iterating through the search results
     url_txt = i["title"]
     src_time = i["src_time"]
     result_str += f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: black;">'+\
-    f'<tr style="border: none; font-weight: bold; font-size: 19px; background-color: whitesmoke;">{url_txt}</tr></a>'+\
+    f'<tr style="border: none; font-weight: bold; font-size: 18px; background-color: whitesmoke;">{url_txt}</tr></a>'+\
     f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: dimgray;">'+\
     f'<tr style="border: none; font-size: 14px;">{description}</tr></a>'+\
     f'<a href="{href}" target="_blank" style="background-color: whitesmoke; display: block; height:100%; text-decoration: none; color: black;">'+\
