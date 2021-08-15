@@ -137,7 +137,8 @@ hide_streamlit_style = """
             """
 
 
-st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 
 #st.markdown(f'<h1 style="background-color: gainsboro; padding-left: 10px; padding-bottom: 20px;">News Aggregator</h1><h5>* Aggregates news from the RSS feeds of top Indian business news websites</h5><br>', unsafe_allow_html=True)
 st.markdown(result_str, unsafe_allow_html=True)
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
