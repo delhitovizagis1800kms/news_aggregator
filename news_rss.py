@@ -110,7 +110,7 @@ final_df.drop(columns=['date', 'parsed_date', 'src', 'elapsed_time', 'elapsed_ti
 final_df.drop_duplicates(subset='description', inplace=True)
 final_df = final_df.loc[(final_df["title"] != ""), :].copy()
     
-result_str = '<html><table style="border: none;">'
+result_str = '<html><table style="border: none;"><tr style="border: none;"><td style="border: none; height: 10px;"></td></tr>'
 for n, i in final_df.iterrows(): #iterating through the search results
     href = i["url"]
     description = i["description"]
