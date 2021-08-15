@@ -44,6 +44,7 @@ def text_clean(desc):
     desc = re.sub("<.*?>", "", desc)
     desc = desc.replace("#39;", "'")
     desc = desc.replace('&quot;', '"')
+    desc = desc.replace('&nbsp;', ' ')
     desc = desc.replace('#32;', ' ')
     return desc
     
