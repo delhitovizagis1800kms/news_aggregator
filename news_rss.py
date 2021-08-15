@@ -130,6 +130,8 @@ hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
             .css-hi6a2p {padding-top: 0rem;}
+            .css-1moshnm {visibility: hidden;}
+            .css-kywgdc {visibility: hidden;}
             footer {visibility: hidden;}
             </style>
             """
